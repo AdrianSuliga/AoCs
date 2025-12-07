@@ -17,3 +17,13 @@ void print_2_int_arrays(const int *left_array, const int *right_array, int size,
     }
     printf("\n");
 }
+
+void print_2d_int_array(int **array, int n, int k)
+{
+    for (int i = 0; i < n; ++i) {
+        for (int j = 1; j <= array[i][0]; ++j) {
+            printf("%d ", array[i][j]);
+        }
+        printf("\n");
+    }
+}

@@ -21,3 +21,15 @@ void print_2_int_vectors(const std::vector<int> &left_vector,
 
     std::cout << '\n';
 }
+
+void print_2d_vector(const std::vector<std::vector<int>> &data,
+                     const std::string end)
+{
+    for (size_t i = 0; i < data.size(); ++i) {
+        for (size_t j = 0; j < data[i].size(); ++j) {
+            std::cout << data[i][j] << " ";
+        }
+        
+        std::cout << end;
+    }
+}

@@ -24,3 +24,32 @@ void read_file_with_2_columns(const std::string file_name,
 
     file.close();
 }
+
+void read_file_with_n_numbers_per_line(const std::string file_name,
+                                       const std::string separator,
+                                       std::vector<std::vector<int>> &output)
+{
+    std::ifstream file(file_name);
+    std::string buffer;
+
+    while (getline(file, buffer)) {
+        std::vector<int> nums_in_line;
+        std::string number_str = "";
+
+        for (char sign : buffer) {
+            if (sign == ' ') {
+                nums_in_line.push_back(std::stoi(number_str));
+                number_str = "";
+                continue;
+            }
+
+            number_str += sign;
+        }
+
+        nums_in_line.push_back(std::stoi(number_str));
+
+        output.push_back(nums_in_line);
+    }
+
+    file.close();
+}

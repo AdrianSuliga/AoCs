@@ -9,3 +9,10 @@ void read_file_with_2_columns(const std::string file_name,
                               const std::string separator, 
                               std::vector<int> &left_vector,
                               std::vector<int> &right_vector);
+
+// Read numbers from file where each line has unknown number of
+// integers separated by separator string. Output is vector
+// of vectors of integers
+void read_file_with_n_numbers_per_line(const std::string file_name,
+                                       const std::string separator,
+                                       std::vector<std::vector<int>> &output);

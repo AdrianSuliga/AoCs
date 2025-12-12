@@ -3,6 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <regex>
+
+std::string read_file(std::string file_name)
+{
+    std::ifstream file(file_name);
+    std::string result = (std::stringstream() << file.rdbuf()).str();
+    file.close();
+    return result;
+}
 
 void read_file_with_2_columns(const std::string file_name, 
                               const std::string separator, 
@@ -52,4 +61,17 @@ void read_file_with_n_numbers_per_line(const std::string file_name,
     }
 
     file.close();
+}
+
+void scan_file_for_regex(const std::string file_name,
+                         const std::regex &regex,
+                         std::vector<std::string> &output)
+{
+    std::string file_content = read_file(file_name);
+    std::smatch found;
+    
+    while (std::regex_search(file_content, found, regex)) {
+        output.push_back(found[0]);
+        file_content = found.suffix();
+    }
 }

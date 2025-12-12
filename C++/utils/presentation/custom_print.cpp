@@ -4,8 +4,18 @@
 
 void print_int_vector(const std::vector<int> &vector, const std::string end)
 {
-    for (size_t i = 0; i < vector.size(); ++i) {
-        std::cout << vector[i] << end;
+    for (int number : vector) {
+        std::cout << number << end;
+    }
+
+    std::cout << '\n';
+}
+
+void print_string_vector(const std::vector<std::string> &vector, 
+                         const std::string end)
+{
+    for (std::string text : vector) {
+        std::cout << text << end;
     }
 
     std::cout << '\n';

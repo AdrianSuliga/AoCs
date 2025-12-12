@@ -5,6 +5,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+int get_file_char_count(const char *file_name)
+{
+    FILE* fptr = fopen(file_name, "r");
+
+    if (fptr == NULL) {
+        printf("Error: Failed to open %s", file_name);
+        return -1;
+    }
+
+    int result = 0;
+    char buffer;
+
+    while ((buffer = fgetc(fptr))) {
+        if (buffer == EOF) {
+            break;
+        }
+        ++result;
+    }
+
+    fclose(fptr);
+
+    return result;
+}
+
 int get_file_line_count(const char *file_name)
 {
     FILE* fptr = fopen(file_name, "r");
@@ -52,6 +76,45 @@ int get_file_max_char_count(const char *file_name, const char sign)
     }
 
     fclose(fptr);
+
+    return result;
+}
+
+int get_file_regex_count(const char *file_name, const regex_t *regex)
+{
+    int file_length = get_file_char_count(file_name);
+
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Failed to open file %s\n", file_name);
+        return -1;
+    }
+
+    char *buffer = malloc(file_length * sizeof(char));
+    if (buffer == NULL) {
+        printf("Failed to allocated enough memory\n");
+        return -1;
+    }
+
+    fread(buffer, sizeof(char) * file_length, 1, fptr);
+
+    regmatch_t found;
+    int total_offset = 0;
+    int result = 0;
+    
+    while (regexec(regex, buffer, 1, &found, 0) == 0) {
+        total_offset += found.rm_eo;
+        buffer += found.rm_eo;
+        ++result;
+
+        if (total_offset >= file_length * sizeof(char)) {
+            break;
+        }
+    }
+    buffer -= total_offset;
+
+    fclose(fptr);
+    free(buffer);
 
     return result;
 }
@@ -123,4 +186,47 @@ void read_file_with_n_numbers_per_line(const char *file_name, const char *separa
     }
 
     fclose(fptr);
+}
+
+void scan_file_for_regex(const char *file_name, const regex_t *regex,
+                        char **output, int size)
+{
+    int file_length = get_file_char_count(file_name);
+
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Failed to open file %s\n", file_name);
+        return;
+    }
+
+    char *buffer = malloc(file_length * sizeof(char));
+    if (buffer == NULL) {
+        printf("Failed to allocated enough memory\n");
+        return;
+    }
+
+    fread(buffer, sizeof(char) * file_length, 1, fptr);
+
+    regmatch_t found;
+    int total_offset = 0;
+    int idx = 0;
+    
+    while (regexec(regex, buffer, 1, &found, 0) == 0) {
+        int found_size = found.rm_eo - found.rm_so;
+        
+        strncpy(output[idx], buffer + found.rm_so, found_size);
+        output[idx][found_size] = '\0'; // End string
+
+        total_offset += found.rm_eo;
+        buffer += found.rm_eo;
+        ++idx;
+
+        if (total_offset >= file_length * sizeof(char)) {
+            break;
+        }
+    }
+    buffer -= total_offset;
+
+    fclose(fptr);
+    free(buffer);
 }

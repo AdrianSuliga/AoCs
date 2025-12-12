@@ -27,3 +27,11 @@ void print_2d_int_array(int **array, int n, int k)
         printf("\n");
     }
 }
+
+void print_string_array(char **array, int n, const char *end)
+{
+    for (int i = 0; i < n; ++i) {
+        printf("%s%s", array[i], end);
+    }
+    printf("\n");
+}

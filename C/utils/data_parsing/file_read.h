@@ -1,11 +1,19 @@
 #ifndef FILE_READ_H
 #define FILE_READ_H
 
+#include <regex.h>
+
+// Counter number of chars in file with given file name
+int get_file_char_count(const char *file_name);
+
 // Count number of lines in file with given file name
 int get_file_line_count(const char *file_name);
 
 // Count maximum number of times sign appears in one line
 int get_file_max_char_count(const char *file_name, const char sign);
+
+// Count how many times given regex appears in the text file
+int get_file_regex_count(const char *file_name, const regex_t *regex);
 
 // Read numbers from file containing two columns of 
 // integers separated by separator string
@@ -18,5 +26,9 @@ void read_file_with_2_columns(const char *file_name, const char *separator,
 // present in a row
 void read_file_with_n_numbers_per_line(const char *file_name, const char *separator,
                                     int **output, int size, int k);
+
+// Scan file for given regex, save maximum of size to output
+void scan_file_for_regex(const char *file_name, const regex_t *regex,
+                        char **output, int size);
 
 #endif /* FILE_READ_H */

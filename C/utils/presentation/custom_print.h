@@ -10,4 +10,7 @@ void print_2_int_arrays(const int *left_array, const int *right_array, int size,
 // print 2D array with n rows and k columns
 void print_2d_int_array(int **array, int n, int k);
 
+// print array of n strings ending each string with end
+void print_string_array(char **array, int n, const char *end);
+
 #endif /* CUSTOM_PRINT_H */

@@ -63,6 +63,19 @@ void read_file_with_n_numbers_per_line(const std::string file_name,
     file.close();
 }
 
+void read_file_into_string_vector(const std::string file_name,
+                                  std::vector<std::string> &output)
+{
+    std::ifstream file(file_name);
+    std::string buffer;
+
+    while (getline(file, buffer)) {
+        output.push_back(buffer);
+    }
+
+    file.close();
+}
+
 void scan_file_for_regex(const std::string file_name,
                          const std::regex &regex,
                          std::vector<std::string> &output)

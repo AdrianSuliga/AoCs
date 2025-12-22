@@ -21,6 +21,10 @@ void read_file_with_n_numbers_per_line(const std::string file_name,
                                        const std::string separator,
                                        std::vector<std::vector<int>> &output);
 
+// Save each line of file's content as separate string in vector
+void read_file_into_string_vector(const std::string file_name,
+                                  std::vector<std::string> &output);
+
 // Scan file for given regex, save found regexes to output
 void scan_file_for_regex(const std::string file_name,
                          const std::regex &regex,

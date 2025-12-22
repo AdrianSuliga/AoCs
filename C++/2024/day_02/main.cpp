@@ -2,6 +2,7 @@
 #include "presentation/custom_print.hpp"
 
 #include <iostream>
+#include <cassert>
 
 static int part_one(const std::string filename);
 static int part_two(const std::string filename);
@@ -11,8 +12,16 @@ int main(int argc, char **argv)
 {
     std::string filename = "input.txt";
 
-    std::cout << "Part One solution is " << part_one(filename) << "\n";
-    std::cout << "Part Two solution is " << part_two(filename) << "\n";
+    int part_one_solution = part_one(filename);
+    int part_two_solution = part_two(filename);
+
+    std::cout << "Part One solution is " << part_one_solution << "\n";
+    std::cout << "Part Two solution is " << part_two_solution << "\n";
+
+    assert(part_one_solution == 246);
+    assert(part_two_solution == 318);
+
+    std::cout << "Solutions are correct\n";
 
     return 0;
 }

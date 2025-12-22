@@ -14,6 +14,6 @@ of these languages.
 | Day 1 | ✅ | $O(n*log(n))$ | $O(n*log(n))$ | ✅ | $O(n^2)$ | $O(n)$ |
 | Day 2 | ✅ | $O(n*k)$ | $O(n*k)$ | ✅ | $O(n*k^2)$ | $O(n*k^2)$ |
 | Day 3 | ✅ | $O(n)$ | $O(n)$ | ✅ | $O(n)$ | $O(n)$ |
-| Day 4 | ✅ | $O(n*k)$ |  | ✅ | $O(n*k)$ |  |
+| Day 4 | ✅ | $O(n*k)$ | $O(n*k)$ | ✅ | $O(n*k)$ | $O(n*k)$ |
 | Day 5 | ⬜ |  |  | ⬜ |  |  |
 | Day 6 | ⬜ |  |  | ⬜ |  |  |

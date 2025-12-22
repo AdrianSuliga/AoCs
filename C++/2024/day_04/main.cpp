@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <utility>
+#include <cassert>
 
 static int part_one(std::string file_name);
 static int part_two(std::string file_name);
@@ -15,8 +16,16 @@ int main()
 {
     std::string filename = "input.txt";
 
-    std::cout << "Part One solution is " << part_one(filename) << "\n";
-    std::cout << "Part Two solution is " << part_two(filename) << "\n";
+    int part_one_solution = part_one(filename);
+    int part_two_solution = part_two(filename);
+
+    std::cout << "Part One solution is " << part_one_solution << "\n";
+    std::cout << "Part Two solution is " << part_two_solution << "\n";
+
+    assert(part_one_solution == 2434);
+    assert(part_two_solution == 1835);
+
+    std::cout << "Solutions are correct\n";
 
     return 0;
 }

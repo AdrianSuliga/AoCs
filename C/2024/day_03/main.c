@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <string.h>
+#include <assert.h>
 
 static int part_one(char *input);
 static int part_two(char *input);
@@ -14,8 +15,16 @@ int main(int argc, char **argv)
 {
     char input[] = "input.txt";
 
-    printf("Part One solution is %d\n", part_one(input));
-    printf("Part Two solution is %d\n", part_two(input));
+    int part_one_solution = part_one(input);
+    int part_two_solution = part_two(input);
+
+    printf("Part One solution is %d\n", part_one_solution);
+    printf("Part Two solution is %d\n", part_two_solution);
+
+    assert(part_one_solution == 196826776);
+    assert(part_two_solution == 106780429);
+
+    printf("Solutions are correct\n");
 
     return 0;
 }

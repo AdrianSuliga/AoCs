@@ -3,7 +3,7 @@
 
 #include <regex.h>
 
-// Counter number of chars in file with given file name
+// Count number of chars in file with given file name
 int get_file_char_count(const char *file_name);
 
 // Count number of lines in file with given file name

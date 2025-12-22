@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 static int part_one(char *input, int n);
 static int part_two(char *input, int n);
@@ -19,8 +20,16 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    printf("Part One solution is %d\n", part_one(input, n));
-    printf("Part Two solution is %d\n", part_two(input, n));
+    int part_one_solution = part_one(input, n);
+    int part_two_solution = part_two(input, n);
+
+    printf("Part One solution is %d\n", part_one_solution);
+    printf("Part Two solution is %d\n", part_two_solution);
+
+    assert(part_one_solution == 1970720);
+    assert(part_two_solution == 17191599);
+
+    printf("Solutions are correct\n");
 
     return 0;
 }

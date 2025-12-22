@@ -39,7 +39,7 @@ int get_file_line_count(const char *file_name)
         return -1;
     }
 
-    size_t buffer_size = 64;
+    size_t buffer_size = 256;
     char buffer[buffer_size];
 
     while (fgets(buffer, buffer_size, fptr) != NULL) {
@@ -48,6 +48,29 @@ int get_file_line_count(const char *file_name)
 
     fclose(fptr);
 
+    return result;
+}
+
+int get_file_first_line_width(const char *file_name)
+{
+    FILE *fptr = fopen(file_name, "r");
+
+    if (fptr == NULL) {
+        printf("Error: Failed to open %s\n", file_name);
+        return -1;
+    }
+
+    int result = 0;
+    char buffer;
+
+    while ((buffer = fgetc(fptr))) {
+        if (buffer == '\n') {
+            break;
+        }
+        ++result;
+    }
+
+    fclose(fptr);
     return result;
 }
 
@@ -185,6 +208,29 @@ void read_file_with_n_numbers_per_line(const char *file_name, const char *separa
         ++line_idx;
     }
 
+    fclose(fptr);
+}
+
+void read_2d_char_array(const char *file_name, char **output, int n, int k)
+{
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Error: Failed to open file %s\n", file_name);
+        return;
+    }
+
+    char *buffer = malloc(k * sizeof(char));
+    if (buffer == NULL) {
+        printf("Error: Failed to allocate memory\n");
+        return;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        fgets(buffer, k, fptr);
+        strcpy(output[i], buffer);
+    }
+
+    free(buffer);
     fclose(fptr);
 }
 

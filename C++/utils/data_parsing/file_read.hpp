@@ -5,7 +5,7 @@
 #include <regex>
 
 // Return entire content from file as string
-std::string read_file(std::string file_name);
+std::string read_file(const std::string file_name);
 
 // Read numbers from file containing two columns of 
 // integers separated by separator string
@@ -15,11 +15,20 @@ void read_file_with_2_columns(const std::string file_name,
                               std::vector<int> &right_vector);
 
 // Read numbers from file where each line has unknown number of
-// integers separated by separator string. Output is vector
+// integers separated by separator char. Output is vector
 // of vectors of integers
 void read_file_with_n_numbers_per_line(const std::string file_name,
-                                       const std::string separator,
+                                       const char separator,
                                        std::vector<std::vector<int>> &output);
+
+// Read file that starts with two columns of integers seperated by column_separator
+// string and ends with lines of integers separated by line_separator string, 
+void read_file_with_2_columns_n_numbers_per_line(const std::string file_name,
+                                                 std::vector<int> &left_column,
+                                                 std::vector<int> &right_column,
+                                                 const std::string column_separator,
+                                                 std::vector<std::vector<int>> &readings,
+                                                 const char lines_separator);
 
 // Save each line of file's content as separate string in vector
 void read_file_into_string_vector(const std::string file_name,

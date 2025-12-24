@@ -30,7 +30,7 @@ static int part_one(const std::string filename)
 {
     std::vector<std::vector<int>> data;
 
-    read_file_with_n_numbers_per_line(filename, " ", data);
+    read_file_with_n_numbers_per_line(filename, ' ', data);
 
     int result = 0;
 
@@ -47,7 +47,7 @@ static int part_two(const std::string filename)
 {
     std::vector<std::vector<int>> data;
 
-    read_file_with_n_numbers_per_line(filename, " ", data);
+    read_file_with_n_numbers_per_line(filename, ' ', data);
 
     int result = 0;
 

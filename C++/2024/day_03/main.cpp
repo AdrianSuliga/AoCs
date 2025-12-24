@@ -6,8 +6,8 @@
 #include <regex>
 #include <cassert>
 
-static int part_one(std::string file_name);
-static int part_two(std::string file_name);
+static int part_one(const std::string file_name);
+static int part_two(const std::string file_name);
 static int extract_from_mul(std::string expression);
 
 int main()
@@ -28,7 +28,7 @@ int main()
     return 0;
 }
 
-static int part_one(std::string file_name)
+static int part_one(const std::string file_name)
 {
     // Prepare regex and output
     std::regex regex = std::regex("mul\\([0-9]{1,3},[0-9]{1,3}\\)");
@@ -47,7 +47,7 @@ static int part_one(std::string file_name)
     return result;
 }
 
-static int part_two(std::string file_name)
+static int part_two(const std::string file_name)
 {
     // Prepare regex and output
     std::regex regex = std::regex("mul\\([0-9]{1,3},[0-9]{1,3}\\)|do\\(\\)|don't\\(\\)");

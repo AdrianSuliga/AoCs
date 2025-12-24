@@ -42,6 +42,7 @@ static int part_one(char *input)
     if (regcomp(regex, "mul\\([0-9]{1,3},[0-9]{1,3}\\)", REG_EXTENDED))
     {
         printf("Error: Could not compile regex\n");
+        regfree(regex);
         return -1;
     }
 
@@ -50,6 +51,7 @@ static int part_one(char *input)
     if (regex_count < 0)
     {
         printf("Failed to count regexes\n");
+        regfree(regex);
         return -1;
     }
 
@@ -59,6 +61,7 @@ static int part_one(char *input)
     if (output == NULL)
     {
         printf("Error: Failed to allocate memory for output\n");
+        regfree(regex);
         return -1;
     }
 
@@ -68,6 +71,11 @@ static int part_one(char *input)
         if (output[i] == NULL)
         {
             printf("Error: Failed to allocate memory for output\n");
+            for (int j = 0; j < i; ++j) {
+                free(output[j]);
+            }
+            regfree(regex);
+            free(output);
             return -1;
         }
     }
@@ -109,6 +117,7 @@ static int part_two(char *input)
     if (regcomp(regex, "mul\\([0-9]{1,3},[0-9]{1,3}\\)|do\\(\\)|don't\\(\\)", REG_EXTENDED))
     {
         printf("Error: Could not compile regex\n");
+        regfree(regex);
         return -1;
     }
 
@@ -117,6 +126,7 @@ static int part_two(char *input)
     if (regex_count < 0)
     {
         printf("Failed to count regexes\n");
+        regfree(regex);
         return -1;
     }
 
@@ -126,6 +136,7 @@ static int part_two(char *input)
     if (output == NULL)
     {
         printf("Error: Failed to allocate memory for output\n");
+        regfree(regex);
         return -1;
     }
 
@@ -135,6 +146,11 @@ static int part_two(char *input)
         if (output[i] == NULL)
         {
             printf("Error: Failed to allocate memory for output\n");
+            for (int j = 0; j < i; ++j) {
+                free(output[j]);
+            }
+            regfree(regex);
+            free(output);
             return -1;
         }
     }

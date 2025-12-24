@@ -9,7 +9,7 @@
 static int part_one(char *input);
 static int part_two(char *input);
 static int xmas_count(char **data, int lines, int columns, int i, int j);
-static int x_mas_count(char **data, int i, int j);
+static int x_mas_present(char **data, int i, int j);
 
 int main(int argc, char **argv)
 {
@@ -111,8 +111,8 @@ static int part_two(char *input)
 
     for (int i = 1; i < lines - 1; ++i) {
         for (int j = 1; j < columns - 3; ++j) {
-            if (data[i][j] == 'A') {
-                result += x_mas_count(data, i, j);
+            if (data[i][j] == 'A' && x_mas_present(data, i, j)) {
+                ++result;
             }
         }
     }
@@ -165,7 +165,7 @@ static int xmas_count(char **data, int lines, int columns, int i, int j)
     return result;
 }
 
-static int x_mas_count(char **data, int i, int j)
+static int x_mas_present(char **data, int i, int j)
 {
     char shape[4] = {
         data[i - 1][j - 1], data[i - 1][j + 1],

@@ -116,6 +116,7 @@ int get_file_regex_count(const char *file_name, const regex_t *regex)
     char *buffer = malloc(file_length * sizeof(char));
     if (buffer == NULL) {
         printf("Failed to allocated enough memory\n");
+        fclose(fptr);
         return -1;
     }
 
@@ -222,6 +223,7 @@ void read_2d_char_array(const char *file_name, char **output, int n, int k)
     char *buffer = malloc(k * sizeof(char));
     if (buffer == NULL) {
         printf("Error: Failed to allocate memory\n");
+        fclose(fptr);
         return;
     }
 
@@ -248,6 +250,7 @@ void scan_file_for_regex(const char *file_name, const regex_t *regex,
     char *buffer = malloc(file_length * sizeof(char));
     if (buffer == NULL) {
         printf("Failed to allocated enough memory\n");
+        fclose(fptr);
         return;
     }
 

@@ -7,8 +7,8 @@
 #include <utility>
 #include <cassert>
 
-static int part_one(std::string file_name);
-static int part_two(std::string file_name);
+static int part_one(const std::string file_name);
+static int part_two(const std::string file_name);
 static int xmas_count(std::vector<std::string> &data, int i, int j);
 static bool x_mas_present(std::vector<std::string> &data, int i, int j);
 
@@ -30,7 +30,7 @@ int main()
     return 0;
 }
 
-static int part_one(std::string file_name)
+static int part_one(const std::string file_name)
 {
     // Read file content
     std::vector<std::string> data;
@@ -50,7 +50,7 @@ static int part_one(std::string file_name)
     return result;
 }
 
-static int part_two(std::string file_name)
+static int part_two(const std::string file_name)
 {
     // Read file content
     std::vector<std::string> data;

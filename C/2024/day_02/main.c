@@ -36,7 +36,7 @@ static int part_one(char *input)
     int size = get_file_line_count(input);
     // Max number of integers per line 
     // (first number is counter of integers)
-    int k = get_file_max_char_count(input, ' ') + 2;
+    int k = get_file_max_char_count_per_line(input, ' ') + 2;
 
     int **data = malloc_2d_int_array(size, k);
     if (data == NULL) {
@@ -45,7 +45,7 @@ static int part_one(char *input)
     }
 
     // Save data from file into prepared array
-    read_file_with_n_numbers_per_line(input, " ", data, size, k);
+    read_file_with_n_numbers_per_line(input, ' ', data, size, k);
 
     // Calculate solution
     int result = 0;
@@ -66,7 +66,7 @@ static int part_two(char *input)
     int size = get_file_line_count(input);
     // Max number of integers per line 
     // (first number is counter of integers)
-    int k = get_file_max_char_count(input, ' ') + 2;
+    int k = get_file_max_char_count_per_line(input, ' ') + 2;
 
     int **data = malloc_2d_int_array(size, k);
     if (data == NULL) {
@@ -75,7 +75,7 @@ static int part_two(char *input)
     }
 
     // Save data from file into prepared array
-    read_file_with_n_numbers_per_line(input, " ", data, size, k);
+    read_file_with_n_numbers_per_line(input, ' ', data, size, k);
 
     // Calculate solution
     int result = 0;

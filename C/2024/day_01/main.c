@@ -38,10 +38,15 @@ static int part_one(char *input, int n)
 {
     /* Parse input from text file */
     int *left_array = malloc(sizeof(int) * n);
-    int *right_array = malloc(sizeof(int) * n);
-
-    if (left_array == NULL || right_array == NULL) {
+    if (left_array == NULL) {
         printf("Error: Failed to allocate %d bytes of memory\n", n);
+        return -1;
+    }
+
+    int *right_array = malloc(sizeof(int) * n);
+    if (right_array == NULL) {
+        printf("Error: Failed to allocate %d bytes of memory\n", n);
+        free(left_array);
         return -1;
     }
 
@@ -68,10 +73,15 @@ static int part_two(char *input, int n)
 {
     /* Parse input from text file */
     int *left_array = malloc(sizeof(int) * n);
-    int *right_array = malloc(sizeof(int) * n);
-
-    if (left_array == NULL || right_array == NULL) {
+    if (left_array == NULL) {
         printf("Error: Failed to allocate %d bytes of memory\n", n);
+        return -1;
+    }
+
+    int *right_array = malloc(sizeof(int) * n);
+    if (right_array == NULL) {
+        printf("Error: Failed to allocate %d bytes of memory\n", n);
+        free(left_array);
         return -1;
     }
 

@@ -47,6 +47,10 @@ static int part_one(char *input)
         data[i] = malloc(k * sizeof(int));
         if (data[i] == NULL) {
             printf("Error: Failed to allocat %d x %d array\n", size, k);
+            for (int j = 0; j < i; ++j) {
+                free(data[j]);
+            }
+            free(data);
             return -1;
         }
     }
@@ -89,6 +93,10 @@ static int part_two(char *input)
         data[i] = malloc(k * sizeof(int));
         if (data[i] == NULL) {
             printf("Error: Failed to allocat %d x %d array\n", size, k);
+            for (int j = 0; j < i; ++j) {
+                free(data[j]);
+            }
+            free(data);
             return -1;
         }
     }

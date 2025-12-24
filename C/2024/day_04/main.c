@@ -1,5 +1,6 @@
 #include "data_parsing/file_read.h"
 #include "presentation/custom_print.h"
+#include "memory/custom_allocation.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,22 +37,10 @@ static int part_one(char *input)
     int columns = get_file_first_line_width(input) + 2; // Account for \n and \0
 
     // Allocate memory for file content
-    char **data = malloc(lines * sizeof(char *));
+    char **data = malloc_2d_char_array(lines, columns);
     if (data == NULL) {
         printf("Failed to allocate memory\n");
         return -1;
-    }
-
-    for (int i = 0; i < lines; ++i) {
-        data[i] = malloc(columns * sizeof(char));
-        if (data[i] == NULL) {
-            printf("Failed to allocate memory\n");
-            for (int j = 0; j < i; ++j) {
-                free(data[j]);
-            }
-            free(data);
-            return -1;
-        }
     }
 
     // Read file content
@@ -69,11 +58,7 @@ static int part_one(char *input)
     }
 
     // Free allocated memory
-    for (int i = 0; i < lines; ++i) {
-        free(data[i]);
-    }
-
-    free(data);
+    free_2d_char_array(data, lines);
 
     return result;
 }
@@ -85,22 +70,10 @@ static int part_two(char *input)
     int columns = get_file_first_line_width(input) + 2; // Account for \n and \0
 
     // Allocate memory for file content
-    char **data = malloc(lines * sizeof(char *));
+    char **data = malloc_2d_char_array(lines, columns);
     if (data == NULL) {
         printf("Failed to allocate memory\n");
         return -1;
-    }
-
-    for (int i = 0; i < lines; ++i) {
-        data[i] = malloc(columns * sizeof(char));
-        if (data[i] == NULL) {
-            printf("Failed to allocate memory\n");
-            for (int j = 0; j < i; ++j) {
-                free(data[j]);
-            }
-            free(data);
-            return -1;
-        }
     }
 
     // Read file content
@@ -118,11 +91,7 @@ static int part_two(char *input)
     }
 
     // Free allocated memory
-    for (int i = 0; i < lines; ++i) {
-        free(data[i]);
-    }
-
-    free(data);
+    free_2d_char_array(data, lines);
 
     return result;
 }

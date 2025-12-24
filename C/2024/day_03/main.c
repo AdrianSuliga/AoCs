@@ -1,5 +1,6 @@
 #include "data_parsing/file_read.h"
 #include "presentation/custom_print.h"
+#include "memory/custom_allocation.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,27 +58,12 @@ static int part_one(char *input)
 
     int max_regex_size = 12; // mul(XXX,XXX)
 
-    char **output = malloc(regex_count * sizeof(char *));
+    char **output = malloc_2d_char_array(regex_count, max_regex_size);
     if (output == NULL)
     {
         printf("Error: Failed to allocate memory for output\n");
         regfree(regex);
         return -1;
-    }
-
-    for (int i = 0; i < regex_count; ++i)
-    {
-        output[i] = malloc(max_regex_size * sizeof(char));
-        if (output[i] == NULL)
-        {
-            printf("Error: Failed to allocate memory for output\n");
-            for (int j = 0; j < i; ++j) {
-                free(output[j]);
-            }
-            regfree(regex);
-            free(output);
-            return -1;
-        }
     }
 
     // Extract all regexes
@@ -94,12 +80,7 @@ static int part_one(char *input)
     // Free allocated memory
     regfree(regex);
 
-    for (int i = 0; i < regex_count; ++i)
-    {
-        free(output[i]);
-    }
-
-    free(output);
+    free_2d_char_array(output, regex_count);
 
     return result;
 }
@@ -132,27 +113,12 @@ static int part_two(char *input)
 
     int max_regex_size = 12; // mul(XXX,XXX)
 
-    char **output = malloc(regex_count * sizeof(char *));
+    char **output = malloc_2d_char_array(regex_count, max_regex_size);
     if (output == NULL)
     {
         printf("Error: Failed to allocate memory for output\n");
         regfree(regex);
         return -1;
-    }
-
-    for (int i = 0; i < regex_count; ++i)
-    {
-        output[i] = malloc(max_regex_size * sizeof(char));
-        if (output[i] == NULL)
-        {
-            printf("Error: Failed to allocate memory for output\n");
-            for (int j = 0; j < i; ++j) {
-                free(output[j]);
-            }
-            regfree(regex);
-            free(output);
-            return -1;
-        }
     }
 
     // Extract all regexes
@@ -179,12 +145,7 @@ static int part_two(char *input)
     // Free allocated memory
     regfree(regex);
 
-    for (int i = 0; i < regex_count; ++i)
-    {
-        free(output[i]);
-    }
-
-    free(output);
+    free_2d_char_array(output, regex_count);
 
     return result;
 }

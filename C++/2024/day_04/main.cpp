@@ -10,7 +10,7 @@
 static int part_one(std::string file_name);
 static int part_two(std::string file_name);
 static int xmas_count(std::vector<std::string> &data, int i, int j);
-static int x_mas_count(std::vector<std::string> &data, int i, int j);
+static bool x_mas_present(std::vector<std::string> &data, int i, int j);
 
 int main()
 {
@@ -61,8 +61,8 @@ static int part_two(std::string file_name)
 
     for (size_t i = 1; i < data.size() - 1; ++i) {
         for (size_t j = 1; j < data[i].size() - 1; ++j) {
-            if (data[i][j] == 'A') {
-                result += x_mas_count(data, i, j);
+            if (data[i][j] == 'A' && x_mas_present(data, i, j)) {
+                ++result;
             }
         }
     }
@@ -111,7 +111,7 @@ static int xmas_count(std::vector<std::string> &data, int i, int j)
     return result;
 }
 
-static int x_mas_count(std::vector<std::string> &data, int i, int j)
+static bool x_mas_present(std::vector<std::string> &data, int i, int j)
 {
     std::string shape = "";
     shape += data[i - 1][j - 1];
@@ -119,7 +119,7 @@ static int x_mas_count(std::vector<std::string> &data, int i, int j)
     shape += data[i + 1][j + 1];
     shape += data[i + 1][j - 1];
 
-    return static_cast<int>(
+    return (
         shape == "MSSM" ||
         shape == "MMSS" ||
         shape == "SSMM" ||

@@ -5,9 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-int get_file_char_count(const char *file_name)
+static void __scan_file_with_2_columns(FILE *fptr, const char *separator, int *left_array, int *right_array, int size);
+static void __scan_file_with_n_numbers_per_line(FILE *fptr, const char separator,
+                                                int **output, int size, int k);
+
+int get_file_total_char_count(const char *file_name)
 {
-    FILE* fptr = fopen(file_name, "r");
+    FILE *fptr = fopen(file_name, "r");
 
     if (fptr == NULL) {
         printf("Error: Failed to open %s", file_name);
@@ -29,9 +33,34 @@ int get_file_char_count(const char *file_name)
     return result;
 }
 
+int get_file_char_count(const char *file_name, const char sign)
+{
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Error: Failed to open %s\n", file_name);
+        return -1;
+    }
+
+    int result = 0;
+    char buffer;
+
+    while ((buffer = fgetc(fptr))) {
+        if (buffer == EOF) {
+            break;
+        }
+
+        if (buffer == sign) {
+            ++result;
+        }
+    }
+
+    fclose(fptr);
+    return result;
+}
+
 int get_file_line_count(const char *file_name)
 {
-    FILE* fptr = fopen(file_name, "r");
+    FILE *fptr = fopen(file_name, "r");
     int result = 0;
 
     if (fptr == NULL) {
@@ -74,9 +103,9 @@ int get_file_first_line_width(const char *file_name)
     return result;
 }
 
-int get_file_max_char_count(const char *file_name, const char sign)
+int get_file_max_char_count_per_line(const char *file_name, const char sign)
 {
-    FILE* fptr = fopen(file_name, "r");
+    FILE *fptr = fopen(file_name, "r");
     int result = 0;
 
     if (fptr == NULL) {
@@ -84,7 +113,7 @@ int get_file_max_char_count(const char *file_name, const char sign)
         return -1;
     }
 
-    size_t buffer_size = 64;
+    size_t buffer_size = 256;
     char buffer[buffer_size];
 
     while (fgets(buffer, buffer_size, fptr) != NULL) {
@@ -105,7 +134,7 @@ int get_file_max_char_count(const char *file_name, const char sign)
 
 int get_file_regex_count(const char *file_name, const regex_t *regex)
 {
-    int file_length = get_file_char_count(file_name);
+    int file_length = get_file_total_char_count(file_name);
 
     FILE *fptr = fopen(file_name, "r");
     if (fptr == NULL) {
@@ -145,34 +174,19 @@ int get_file_regex_count(const char *file_name, const regex_t *regex)
 
 void read_file_with_2_columns(const char *file_name, const char *separator, int *left_array, int *right_array, int size)
 {
-    FILE* fptr = fopen(file_name, "r");
+    FILE *fptr = fopen(file_name, "r");
 
     if (fptr == NULL) {
         printf("Error: Failed to open %s", file_name);
         return;
     }
 
-    size_t buffer_size = 64;
-    char buffer[buffer_size];
-    int write_idx = 0;
-
-    while (fgets(buffer, buffer_size, fptr) != NULL) {
-        char *left_num = strtok(buffer, separator);
-        char *right_num = strtok(NULL, separator);
-
-        int left = atoi(left_num);
-        int right = atoi(right_num);
-
-        left_array[write_idx] = left;
-        right_array[write_idx] = right;
-
-        ++write_idx;
-    }
+    __scan_file_with_2_columns(fptr, separator, left_array, right_array, size);
 
     fclose(fptr);
 }
 
-void read_file_with_n_numbers_per_line(const char *file_name, const char *separator,
+void read_file_with_n_numbers_per_line(const char *file_name, const char separator,
                                     int **output, int size, int k)
 {
     FILE *fptr = fopen(file_name, "r");
@@ -182,32 +196,7 @@ void read_file_with_n_numbers_per_line(const char *file_name, const char *separa
         return;
     }
 
-    size_t buffer_size = 64;
-    char buffer[buffer_size];
-    int line_idx = 0;
-
-    while (fgets(buffer, buffer_size, fptr) != NULL) {
-        int counter = 0;
-        // Count number of integers in one line
-        for (size_t i = 0; buffer[i] != '\n'; ++i) {
-            if (buffer[i] == ' ') {
-                ++counter;
-            }
-        }
-        ++counter;
-        output[line_idx][0] = counter;
-
-        int column_idx = 1;
-        char *number = strtok(buffer, " ");
-        
-        while (number != NULL) {
-            output[line_idx][column_idx] = atoi(number);
-            ++column_idx;
-            number = strtok(NULL, " ");
-        }
-
-        ++line_idx;
-    }
+    __scan_file_with_n_numbers_per_line(fptr, separator, output, size, k);
 
     fclose(fptr);
 }
@@ -236,10 +225,28 @@ void read_2d_char_array(const char *file_name, char **output, int n, int k)
     fclose(fptr);
 }
 
+void read_file_with_2_columns_n_numbers_per_line(const char *file_name, int *left_column, 
+                                                 int *right_column, const char *column_separator,
+                                                 int column_size, int **readings, const char line_separator,
+                                                 int readings_size, int max_read_per_line)
+{
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Failed to open file %s\n", file_name);
+        return;
+    }
+    
+    __scan_file_with_2_columns(fptr, column_separator, left_column, right_column, column_size);
+
+    __scan_file_with_n_numbers_per_line(fptr, line_separator, readings, readings_size, max_read_per_line);
+    
+    fclose(fptr);
+}
+
 void scan_file_for_regex(const char *file_name, const regex_t *regex,
                         char **output, int size)
 {
-    int file_length = get_file_char_count(file_name);
+    int file_length = get_file_total_char_count(file_name);
 
     FILE *fptr = fopen(file_name, "r");
     if (fptr == NULL) {
@@ -278,4 +285,55 @@ void scan_file_for_regex(const char *file_name, const regex_t *regex,
 
     fclose(fptr);
     free(buffer);
+}
+
+static void __scan_file_with_2_columns(FILE *fptr, const char *separator, int *left_array, int *right_array, int size)
+{
+    size_t buffer_size = 64;
+    char buffer[buffer_size];
+    int write_idx = 0;
+
+    while (fgets(buffer, buffer_size, fptr) != NULL && write_idx < size) {
+        char *left_num = strtok(buffer, separator);
+        char *right_num = strtok(NULL, separator);
+
+        int left = atoi(left_num);
+        int right = atoi(right_num);
+
+        left_array[write_idx] = left;
+        right_array[write_idx] = right;
+
+        ++write_idx;
+    }
+}
+
+static void __scan_file_with_n_numbers_per_line(FILE *fptr, const char separator,
+                                                int **output, int size, int k)
+{
+    size_t buffer_size = 256;
+    char buffer[buffer_size];
+    int line_idx = 0;
+
+    while (fgets(buffer, buffer_size, fptr) != NULL) {
+        int counter = 0;
+        // Count number of integers in one line
+        for (size_t i = 0; buffer[i] != '\n'; ++i) {
+            if (buffer[i] == separator) {
+                ++counter;
+            }
+        }
+        ++counter;
+        output[line_idx][0] = counter;
+
+        int column_idx = 1;
+        char *number = strtok(buffer, &separator);
+        
+        while (number != NULL) {
+            output[line_idx][column_idx] = atoi(number);
+            ++column_idx;
+            number = strtok(NULL, &separator);
+        }
+
+        ++line_idx;
+    }
 }

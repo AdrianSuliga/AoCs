@@ -1,6 +1,7 @@
 #include "data_parsing/file_read.h"
 #include "presentation/custom_print.h"
 #include "math/custom_math.h"
+#include "memory/custom_allocation.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,22 +38,10 @@ static int part_one(char *input)
     // (first number is counter of integers)
     int k = get_file_max_char_count(input, ' ') + 2;
 
-    int **data = malloc(size * sizeof(int *));
+    int **data = malloc_2d_int_array(size, k);
     if (data == NULL) {
         printf("Error: Failed to allocat %d x %d array\n", size, k);
         return -1;
-    }
-
-    for (int i = 0; i < size; ++i) {
-        data[i] = malloc(k * sizeof(int));
-        if (data[i] == NULL) {
-            printf("Error: Failed to allocat %d x %d array\n", size, k);
-            for (int j = 0; j < i; ++j) {
-                free(data[j]);
-            }
-            free(data);
-            return -1;
-        }
     }
 
     // Save data from file into prepared array
@@ -66,11 +55,7 @@ static int part_one(char *input)
         }
     }
 
-    for (int i = 0; i < size; ++i) {
-        free(data[i]);
-    }
-
-    free(data);
+    free_2d_int_array(data, size);
 
     return result;
 }
@@ -83,22 +68,10 @@ static int part_two(char *input)
     // (first number is counter of integers)
     int k = get_file_max_char_count(input, ' ') + 2;
 
-    int **data = malloc(size * sizeof(int *));
+    int **data = malloc_2d_int_array(size, k);
     if (data == NULL) {
         printf("Error: Failed to allocat %d x %d array\n", size, k);
         return -1;
-    }
-
-    for (int i = 0; i < size; ++i) {
-        data[i] = malloc(k * sizeof(int));
-        if (data[i] == NULL) {
-            printf("Error: Failed to allocat %d x %d array\n", size, k);
-            for (int j = 0; j < i; ++j) {
-                free(data[j]);
-            }
-            free(data);
-            return -1;
-        }
     }
 
     // Save data from file into prepared array
@@ -112,11 +85,7 @@ static int part_two(char *input)
         }
     }
 
-    for (int i = 0; i < size; ++i) {
-        free(data[i]);
-    }
-
-    free(data);
+    free_2d_int_array(data, size);
 
     return result;
 }

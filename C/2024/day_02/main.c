@@ -14,18 +14,30 @@ static int is_almost_safe(int *array, int size);
 
 int main(int argc, char **argv)
 {
-    char input[] = "input.txt";
+    if (argc != 3) {
+        printf("Error: Wrong number of arguments. Expected 3, got %d\n", argc);
+        printf("How to use: ./main <path_to_input> <mode>\n");
+        return 1;
+    }
+
+    char *input = argv[1];
+    int mode = atoi(argv[2]);
 
     int part_one_solution = part_one(input);
     int part_two_solution = part_two(input);
 
-    printf("Part One solution is %d\n", part_one_solution);
-    printf("Part Two solution is %d\n", part_two_solution);
-
     assert(part_one_solution == 246);
     assert(part_two_solution == 318);
 
-    printf("Solutions are correct\n");
+    if (mode == RUN) {
+        printf("Part One solution is %d\n", part_one_solution);
+        printf("Part Two solution is %d\n", part_two_solution);
+    } else if (mode == TEST) {
+        printf("Solutions for 2024 Day 02 are correct\n");
+    } else {
+        printf("Error: Wrong mode selected %d\n", mode);
+        return -1;
+    }
 
     return 0;
 }

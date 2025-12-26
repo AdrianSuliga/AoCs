@@ -1,5 +1,6 @@
-#include <data_parsing/file_read.hpp>
-#include <presentation/custom_print.hpp>
+#include "data_parsing/file_read.hpp"
+#include "presentation/custom_print.hpp"
+#include "math/custom_math.hpp"
 
 #include <iostream>
 #include <vector>
@@ -10,20 +11,32 @@ static int part_one(const std::string file_name);
 static int part_two(const std::string file_name);
 static int extract_from_mul(std::string expression);
 
-int main()
+int main(int argc, char **argv)
 {
-    std::string filename = "input.txt";
+    if (argc != 3) {
+        std::cout << "Error: Wrong number of arguments. Expected 3, got " << argc << "\n";
+        std::cout << "How to use: ./main <path_to_input> <mode>\n";
+        return 1;
+    }
+
+    std::string filename = argv[1];
+    CMD mode = static_cast<CMD>(std::stoi(argv[2]));
 
     int part_one_solution = part_one(filename);
     int part_two_solution = part_two(filename);
 
-    std::cout << "Part One solution is " << part_one_solution << "\n";
-    std::cout << "Part Two solution is " << part_two_solution << "\n";
-
     assert(part_one_solution == 196826776);
     assert(part_two_solution == 106780429);
 
-    std::cout << "Solutions are correct\n";
+    if (mode == RUN) {
+        std::cout << "Part One solution is " << part_one_solution << "\n";
+        std::cout << "Part Two solution is " << part_two_solution << "\n";
+    } else if (mode == TEST) {
+        std::cout << "Solutions for 2024 Day 03 are correct\n";
+    } else {
+        std::cout << "Error: Wrong mode selected " << mode << "\n";
+        return 1;
+    }
 
     return 0;
 }

@@ -8,11 +8,13 @@ TARGET = main
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET)
 
+.PHONY: all run clean
+
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) input.txt 0
 
 all:
 	make $(TARGET) && make run

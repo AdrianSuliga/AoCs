@@ -5,6 +5,8 @@ SRCS = main.c ../../utils/data_parsing/file_read.c ../../utils/presentation/cust
 OBJS = $(SRCS:.c=.o)
 TARGET = main
 
+.PHONY: all run clean
+
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET)
 
@@ -12,7 +14,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) input.txt 0
 
 all:
 	make $(TARGET) && make run

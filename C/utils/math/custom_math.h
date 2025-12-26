@@ -7,4 +7,9 @@
 #define MAX(a, b) ((a) >= (b) ? (a) : (b)) 
 #define MIN(a, b) ((a) <= (b) ? (a) : (b))
 
+enum cmd {
+    RUN,
+    TEST
+};
+
 #endif /* CUSTOM_MATH_H */

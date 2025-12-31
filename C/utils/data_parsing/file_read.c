@@ -289,7 +289,7 @@ void scan_file_for_regex(const char *file_name, const regex_t *regex,
     int total_offset = 0;
     int idx = 0;
     
-    while (regexec(regex, buffer, 1, &found, 0) == 0) {
+    while (regexec(regex, buffer, 1, &found, 0) == 0 && idx < size) {
         int found_size = found.rm_eo - found.rm_so;
         
         strncpy(output[idx], buffer + found.rm_so, found_size);
@@ -336,7 +336,7 @@ static void __scan_file_with_n_numbers_per_line(FILE *fptr, const char separator
     char buffer[buffer_size];
     int line_idx = 0;
 
-    while (fgets(buffer, buffer_size, fptr) != NULL) {
+    while (fgets(buffer, buffer_size, fptr) != NULL && line_idx < size) {
         int counter = 0;
         // Count number of integers in one line
         for (size_t i = 0; buffer[i] != '\n'; ++i) {
@@ -350,7 +350,7 @@ static void __scan_file_with_n_numbers_per_line(FILE *fptr, const char separator
         int column_idx = 1;
         char *number = strtok(buffer, &separator);
         
-        while (number != NULL) {
+        while (number != NULL && column_idx < k) {
             output[line_idx][column_idx] = atoi(number);
             ++column_idx;
             number = strtok(NULL, &separator);

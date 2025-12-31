@@ -115,7 +115,7 @@ static int part_two(char *input)
     }
 
     int readings_size = get_file_line_count(input) - column_height - 1;
-    int max_readings_per_line = get_file_max_char_count_per_line(input, ',') + 1;
+    int max_readings_per_line = get_file_max_char_count_per_line(input, ',') + 2;
 
     int **readings = malloc_2d_int_array(readings_size, max_readings_per_line + 1);
     if (readings == NULL) {

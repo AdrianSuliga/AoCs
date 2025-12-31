@@ -44,6 +44,11 @@ void read_file_with_2_columns_n_numbers_per_line(const char *file_name, int *lef
                                                  int column_size, int **readings, const char line_separator,
                                                  int readings_size, int max_read_per_line);
 
+// Read file that has columns of longs separated by separator char and save
+// first column into given array
+void read_file_first_column_of_longs(const char *file_name, const char separator,
+                                     long *output, int n);
+
 // Scan file for given regex, save maximum of size to output
 void scan_file_for_regex(const char *file_name, const regex_t *regex,
                         char **output, int size);

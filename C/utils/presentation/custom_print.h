@@ -4,6 +4,9 @@
 // print array of ints ending each character with end string
 void print_int_array(const int *array, int size, const char *end);
 
+// print array of longs ending each character with end string
+void print_long_array(const long *array, int size, const char *end);
+
 // print 2 arrays of ints ending each pair of characters with end string
 void print_2_int_arrays(const int *left_array, const int *right_array, int size, const char *end);
 

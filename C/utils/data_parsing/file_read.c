@@ -243,6 +243,28 @@ void read_file_with_2_columns_n_numbers_per_line(const char *file_name, int *lef
     fclose(fptr);
 }
 
+void read_file_first_column_of_longs(const char *file_name, const char separator,
+                                     long *output, int n)
+{
+    FILE *fptr = fopen(file_name, "r");
+    if (fptr == NULL) {
+        printf("Failed to open file %s\n", file_name);
+        return;
+    }
+
+    int write_idx = 0;
+    size_t buffer_size = 64;
+    char buffer[buffer_size];
+
+    while (fgets(buffer, buffer_size, fptr) != NULL && write_idx < n) {
+        char *long_chr = strtok(buffer, &separator);
+        output[write_idx] = atol(long_chr);
+        ++write_idx;
+    }
+
+    fclose(fptr);
+}
+
 void scan_file_for_regex(const char *file_name, const regex_t *regex,
                         char **output, int size)
 {

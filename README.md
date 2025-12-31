@@ -16,6 +16,6 @@ of these languages.
 | Day 3 | ✅ | $O(n)$ | $O(n)$ | ✅ | $O(n)$ | $O(n)$ | 
 | Day 4 | ✅ | $O(n*m)$ | $O(n*m)$ | ✅ | $O(n*m)$ | $O(n*m)$ |
 | Day 5 | ✅ | $O(n * m * k^2)$ | $O(n * m * k^2)$ | ✅ | $O(n * m * k^2)$ | $O(n * m * k^2)$ |
-| Day 6 | ✅ | $O(n * m)$ |  | ✅ | $O(n^2 * m^2)$ |  |
+| Day 6 | ✅ | $O(n * m)$ | $O(n * m)$ | ✅ | $O(n^2 * m^2)$ | $O(n^2 * m^2)$ |
 | Day 7 | ⬜ |  |  | ⬜ |  |  |
 | Day 8 | ⬜ |  |  | ⬜ |  |  |

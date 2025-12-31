@@ -7,8 +7,8 @@
 #include <vector>
 #include <cassert>
 
-static int part_one(std::string file_name);
-static int part_two(std::string file_name);
+static int part_one(const std::string file_name);
+static int part_two(const std::string file_name);
 static bool is_correctly_ordered(std::vector<int> &reading, 
                                  std::vector<int> &left_column,
                                  std::vector<int> &right_column);
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     return 0;
 }
 
-static int part_one(std::string file_name)
+static int part_one(const std::string file_name)
 {
     // Read data from file
     std::vector<int> left_column;
@@ -69,7 +69,7 @@ static int part_one(std::string file_name)
     return result;
 }
 
-static int part_two(std::string file_name)
+static int part_two(const std::string file_name)
 {
     // Read data from file
     std::vector<int> left_column;

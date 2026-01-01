@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall -std=c++17 -g -I./utils
 
-# All needed .c files
+# All needed .cpp files
 SRCS = ./2024/day_01/main.cpp ./2024/day_02/main.cpp \
        ./2024/day_03/main.cpp ./2024/day_04/main.cpp \
 	   ./2024/day_05/main.cpp ./2024/day_06/main.cpp \

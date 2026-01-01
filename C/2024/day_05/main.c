@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <time.h>
 
 static int part_one(char *input);
 static int part_two(char *input);
@@ -25,17 +26,26 @@ int main(int argc, char **argv)
     char *input = argv[1];
     int mode = atoi(argv[2]);
 
+    clock_t part_one_start = clock(); 
     int part_one_solution = part_one(input);
+    clock_t part_one_end = clock();
+    double part_one_exec_time = ((double)(part_one_end - part_one_start)) / CLOCKS_PER_SEC;
+
+    clock_t part_two_start = clock();
     int part_two_solution = part_two(input);
+    clock_t part_two_end = clock();
+    double part_two_exec_time = ((double)(part_two_end - part_two_start)) / CLOCKS_PER_SEC;
 
     assert(part_one_solution == 4959);
     assert(part_two_solution == 4655);
 
     if (mode == RUN) {
-        printf("Part One solution is %d\n", part_one_solution);
-        printf("Part Two solution is %d\n", part_two_solution);
+        printf("[%.6f s] Part One solution is %d\n", part_one_exec_time, part_one_solution);
+        printf("[%.6f s] Part Two solution is %d\n", part_two_exec_time, part_two_solution);
     } else if (mode == TEST) {
-        printf("Solutions for 2024 Day 05 are correct\n");
+        printf("Solutions for 2024 Day 05 are correct [P1 %.6f s | P2 %.6f s]\n",
+                part_one_exec_time,
+                part_two_exec_time);
     } else {
         printf("Error: Wrong mode selected %d\n", mode);
         return -1;

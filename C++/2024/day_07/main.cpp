@@ -166,22 +166,24 @@ static bool is_possible_concat(std::vector<int> &data, long target)
     return search_recursive_concat(data, target, data[0], 1, memo);
 }
 
+// Usage of memo is commented out due to small size of data compared
+// to value of target. That's why O(n * 3^k) is better than O(n * k * T)
 static bool search_recursive_concat(std::vector<int> &data, long target, long result,
                                     size_t idx, dictionary &memo)
 {
-    state current_state = std::make_pair(result, idx);
-
-    if (memo.count(current_state) > 0) {
-        return memo.at(current_state);
-    }
+    //state current_state = std::make_pair(result, idx);
+//
+    //if (memo.count(current_state) > 0) {
+    //    return memo.at(current_state);
+    //}
 
     if (idx == data.size()) {
-        memo.insert({current_state, result == target});
+        //memo.insert({current_state, result == target});
         return result == target;
     }
 
     if (result > target) {
-        memo.insert({current_state, false});
+        //memo.insert({current_state, false});
         return false;
     }
 
@@ -199,6 +201,6 @@ static bool search_recursive_concat(std::vector<int> &data, long target, long re
                         search_recursive_concat(data, target, result * data[idx], idx + 1, memo) ||
                         search_recursive_concat(data, target, concat_result, idx + 1, memo);
 
-    memo.insert({current_state, return_value});
+    //memo.insert({current_state, return_value});
     return return_value;
 }

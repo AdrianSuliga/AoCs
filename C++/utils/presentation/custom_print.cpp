@@ -11,6 +11,15 @@ void print_int_vector(const std::vector<int> &vector, const std::string end)
     std::cout << '\n';
 }
 
+void print_long_vector(const std::vector<long> &vector, const std::string end)
+{
+    for (long number : vector) {
+        std::cout << number << end;
+    }
+
+    std::cout << '\n';
+}
+
 void print_string_vector(const std::vector<std::string> &vector, 
                          const std::string end)
 {

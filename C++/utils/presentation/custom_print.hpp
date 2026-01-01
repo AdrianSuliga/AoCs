@@ -6,6 +6,9 @@
 // print vector of ints ending each character with end string
 void print_int_vector(const std::vector<int> &vector, const std::string end);
 
+// print vector of longs ending each character with end string
+void print_long_vector(const std::vector<long> &vector, const std::string end);
+
 // print vector of strings ending each element with end string
 void print_string_vector(const std::vector<std::string> &vector, 
                          const std::string end);

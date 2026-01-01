@@ -12,7 +12,8 @@ static void __scan_file_with_2_columns(std::ifstream &file,
 
 static void __scan_file_with_n_numbers_per_line(std::ifstream &file,
                                                 const char separator,
-                                                std::vector<std::vector<int>> &output);
+                                                std::vector<std::vector<int>> &output,
+                                                std::vector<size_t> &to_ignore);
 
 std::string read_file(const std::string file_name)
 {
@@ -38,9 +39,19 @@ void read_file_with_n_numbers_per_line(const std::string file_name,
                                        const char separator,
                                        std::vector<std::vector<int>> &output)
 {
+    std::vector<size_t> to_ignore = {};
+
+    read_file_with_n_numbers_per_line(file_name, separator, output, to_ignore);
+}
+
+void read_file_with_n_numbers_per_line(const std::string file_name,
+                                       const char separator,
+                                       std::vector<std::vector<int>> &output,
+                                       std::vector<size_t> &to_ignore)
+{
     std::ifstream file(file_name);
     
-    __scan_file_with_n_numbers_per_line(file, separator, output);
+    __scan_file_with_n_numbers_per_line(file, separator, output, to_ignore);
 
     file.close();
 }
@@ -56,7 +67,25 @@ void read_file_with_2_columns_n_numbers_per_line(const std::string file_name,
 
     __scan_file_with_2_columns(file, column_separator, left_column, right_column);
 
-    __scan_file_with_n_numbers_per_line(file, lines_separator, readings);
+    std::vector<size_t> to_ignore = {};
+
+    __scan_file_with_n_numbers_per_line(file, lines_separator, readings, to_ignore);
+
+    file.close();
+}
+
+void read_file_with_column_of_longs(const std::string file_name,
+                                    std::vector<long> &output,
+                                    const std::string separator)
+{
+    std::ifstream file(file_name);
+
+    std::string buffer;
+
+    while (getline(file, buffer)) {
+        std::string long_number = buffer.substr(0, buffer.find(separator));
+        output.push_back(std::stol(long_number));
+    }
 
     file.close();
 }
@@ -107,18 +136,23 @@ static void __scan_file_with_2_columns(std::ifstream &file,
 
 static void __scan_file_with_n_numbers_per_line(std::ifstream &file,
                                                 const char separator,
-                                                std::vector<std::vector<int>> &output)
+                                                std::vector<std::vector<int>> &output,
+                                                std::vector<size_t> &to_ignore)
 {
     std::string buffer;
 
     while (getline(file, buffer)) {
         std::vector<int> nums_in_line;
         std::string number_str = "";
+        size_t write_idx = 0;
 
         for (char sign : buffer) {
             if (sign == separator) {
-                nums_in_line.push_back(std::stoi(number_str));
+                if (std::find(to_ignore.begin(), to_ignore.end(), write_idx) == to_ignore.end()) {
+                    nums_in_line.push_back(std::stoi(number_str));
+                }
                 number_str = "";
+                ++write_idx;
                 continue;
             }
 
@@ -126,6 +160,7 @@ static void __scan_file_with_n_numbers_per_line(std::ifstream &file,
         }
 
         nums_in_line.push_back(std::stoi(number_str));
+        ++write_idx;
 
         output.push_back(nums_in_line);
     }

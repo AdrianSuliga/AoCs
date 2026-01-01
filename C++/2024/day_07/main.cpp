@@ -8,6 +8,12 @@
 #include <unordered_map>
 #include <functional>
 #include <cassert>
+#include <chrono>
+#include <iomanip>
+
+using std::chrono::steady_clock;
+using std::chrono::duration_cast;
+using std::chrono::microseconds;
 
 using state = std::pair<long, size_t>;
 struct StateHash {
@@ -40,17 +46,37 @@ int main(int argc, char **argv)
     std::string filename = argv[1];
     CMD mode = static_cast<CMD>(std::stoi(argv[2]));
 
+    steady_clock::time_point part_one_begin = steady_clock::now();
     long part_one_solution = part_one(filename);
+    steady_clock::time_point part_one_end = steady_clock::now();
+    double part_one_exec_time = static_cast<double>(
+                                    duration_cast<microseconds>(
+                                        part_one_end - part_one_begin
+                                    ).count()
+                                ) / 1000000.0;
+
+    steady_clock::time_point part_two_begin = steady_clock::now();
     long part_two_solution = part_two(filename);
+    steady_clock::time_point part_two_end = steady_clock::now();
+    double part_two_exec_time = static_cast<double>(
+                                    duration_cast<microseconds>(
+                                        part_two_end - part_two_begin
+                                    ).count()
+                                ) / 1000000.0;
 
     assert(part_one_solution == 2941973819040);
     assert(part_two_solution == 249943041417600);
 
+    std::cout << std::fixed << std::setprecision(6);
+
     if (mode == RUN) {
-        std::cout << "Part One solution is " << part_one_solution << "\n";
-        std::cout << "Part Two solution is " << part_two_solution << "\n";
+        std::cout << "[" << part_one_exec_time << " s] " 
+                  << "Part One solution is " << part_one_solution << "\n";
+        std::cout << "[" << part_two_exec_time << " s] "
+                  << "Part Two solution is " << part_two_solution << "\n";
     } else if (mode == TEST) {
-        std::cout << "Solutions for 2024 Day 07 are correct\n";
+        std::cout << "Solutions for 2024 Day 07 are correct "
+                  << "[P1 " << part_one_exec_time << " s | P2 " << part_two_exec_time << " s]\n";
     } else {
         std::cout << "Error: Wrong mode selected " << mode << "\n";
         return 1;

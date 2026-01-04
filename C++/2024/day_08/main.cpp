@@ -14,16 +14,12 @@ using std::chrono::steady_clock;
 using std::chrono::duration_cast;
 using std::chrono::microseconds;
 
-using position = std::pair<int, int>;
-using world_map = std::vector<std::string>;
-
 static int part_one(const std::string file_name);
 static int part_two(const std::string file_name);
 static int find_antinodes(const std::string file_name, 
                           void (*mark_function)(world_map &map, position &p1, position &p2, std::set<position> &antinodes));
 static void mark_antinodes(world_map &map, position &p1, position &p2, std::set<position> &antinodes);
 static void mark_antinodes_resonant(world_map &map, position &p1, position &p2, std::set<position> &antinodes);
-static bool is_on_map(world_map &map, position &pos);
 static bool is_antenna(char sign);
 
 int main(int argc, char **argv)
@@ -158,17 +154,6 @@ static void mark_antinodes_resonant(world_map &map, position &p1, position &p2, 
 
         antinode2 = std::make_pair(antinode2.first - x_distance, antinode2.second - y_distance);
     }
-}
-
-static bool is_on_map(world_map &map, position &pos)
-{
-    int height = map.size();
-    int width = map[0].size();
-
-    return (
-        -1 < pos.first && pos.first < height &&
-        -1 < pos.second && pos.second < width
-    );
 }
 
 static bool is_antenna(char sign)

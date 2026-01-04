@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall -std=c++17 -g -I../../utils
 
-SRCS = main.cpp ../../utils/data_parsing/file_read.cpp ../../utils/presentation/custom_print.cpp
+SRCS = main.cpp ../../utils/data_parsing/file_read.cpp ../../utils/math/custom_math.cpp
 OBJS = $(SRCS:.cpp=.o)
 TARGET = main
 

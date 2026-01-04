@@ -3,9 +3,6 @@
 #include "math/custom_math.hpp"
 
 #include <iostream>
-#include <string>
-#include <vector>
-#include <utility>
 #include <cassert>
 #include <chrono>
 #include <iomanip>
@@ -14,17 +11,13 @@ using std::chrono::steady_clock;
 using std::chrono::duration_cast;
 using std::chrono::microseconds;
 
-using position = std::pair<int, int>;
-using puzzle_map = std::vector<std::string>;
-
 static int part_one(const std::string file_name);
 static int part_two(const std::string file_name);
-static position get_guard_location(puzzle_map &map);
-static void patrol_map(puzzle_map &map, position current_position); 
+static position get_guard_location(world_map &map);
+static void patrol_map(world_map &map, position current_position); 
 static position get_next_position(position old_position, char direction);
-static bool is_out_of_map(puzzle_map &map, position position);
-static bool creates_loop(puzzle_map &map, position initial_position, position new_obstacle);
-static bool move(puzzle_map &map, position &old_position, char &direction);
+static bool creates_loop(world_map &map, position initial_position, position new_obstacle);
+static bool move(world_map &map, position &old_position, char &direction);
 static char rotate(char old_direction);
 
 int main(int argc, char **argv)
@@ -80,7 +73,7 @@ int main(int argc, char **argv)
 static int part_one(const std::string file_name)
 {
     // Read file
-    puzzle_map map;
+    world_map map;
     read_file_into_string_vector(file_name, map);
     
     // Locate guard
@@ -106,7 +99,7 @@ static int part_one(const std::string file_name)
 static int part_two(const std::string file_name)
 {
     // Read file
-    puzzle_map map;
+    world_map map;
     read_file_into_string_vector(file_name, map);
     
     // Locate guard
@@ -133,7 +126,7 @@ static int part_two(const std::string file_name)
     return result;
 }
 
-static position get_guard_location(puzzle_map &map)
+static position get_guard_location(world_map &map)
 {
     position result = std::make_pair<int, int>(-1, -1);
 
@@ -149,7 +142,7 @@ static position get_guard_location(puzzle_map &map)
     return result;
 }
 
-static void patrol_map(puzzle_map &map, position current_position)
+static void patrol_map(world_map &map, position current_position)
 {
     char direction = '^';
 
@@ -158,7 +151,7 @@ static void patrol_map(puzzle_map &map, position current_position)
     }
 }
 
-static bool creates_loop(puzzle_map &map, position initial_position, position new_obstacle)
+static bool creates_loop(world_map &map, position initial_position, position new_obstacle)
 {
     char slow_direction = '^';
     char fast_direction = '^';
@@ -177,7 +170,7 @@ static bool creates_loop(puzzle_map &map, position initial_position, position ne
                 return false;
             }
         }
-    } while (!is_out_of_map(map, fast_guard) && (slow_guard != fast_guard || slow_direction != fast_direction));
+    } while (is_on_map(map, fast_guard) && (slow_guard != fast_guard || slow_direction != fast_direction));
 
     map[new_obstacle.first][new_obstacle.second] = '.';
 
@@ -226,16 +219,7 @@ static position get_next_position(position old_position, char direction)
     );
 }
 
-static bool is_out_of_map(puzzle_map &map, position position)
-{
-    int height = map.size();
-    int width = map[0].size();
-
-    return !(-1 < position.first && position.first < height &&
-             -1 < position.second && position.second < width);
-}
-
-static bool move(puzzle_map &map, position &old_position, char &direction)
+static bool move(world_map &map, position &old_position, char &direction)
 {
     position new_position = get_next_position(old_position, direction);
 

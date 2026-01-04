@@ -7,12 +7,14 @@ SRCS = ./2024/day_01/main.cpp ./2024/day_02/main.cpp \
 	   ./2024/day_05/main.cpp ./2024/day_06/main.cpp \
 	   ./2024/day_07/main.cpp ./2024/day_08/main.cpp \
 	   ./utils/data_parsing/file_read.cpp \
-	   ./utils/presentation/custom_print.cpp
+	   ./utils/presentation/custom_print.cpp \
+	   ./utils/math/custom_math.cpp
 
 # All needed object files
 UTIL_OBJS = \
 	./utils/data_parsing/file_read.o \
-	./utils/presentation/custom_print.o
+	./utils/presentation/custom_print.o \
+	./utils/math/custom_math.o
 
 # All needed binaries
 RUNNABLES = day_01 day_02 day_03 day_04 day_05 \

@@ -5,7 +5,7 @@ CFLAGS = -Wall -std=c++17 -g -I./utils
 SRCS = ./2024/day_01/main.cpp ./2024/day_02/main.cpp \
        ./2024/day_03/main.cpp ./2024/day_04/main.cpp \
 	   ./2024/day_05/main.cpp ./2024/day_06/main.cpp \
-	   ./2024/day_07/main.cpp \
+	   ./2024/day_07/main.cpp ./2024/day_08/main.cpp \
 	   ./utils/data_parsing/file_read.cpp \
 	   ./utils/presentation/custom_print.cpp
 
@@ -16,7 +16,7 @@ UTIL_OBJS = \
 
 # All needed binaries
 RUNNABLES = day_01 day_02 day_03 day_04 day_05 \
-			day_06 day_07
+			day_06 day_07 day_08
 
 BINS = $(RUNNABLES:%=2024/%/main)
 OBJS = $(SRCS:.cpp=.o)

@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -std=c17 -g -I../../utils
 
-SRCS = main.c ../../utils/data_parsing/file_read.c ../../utils/memory/custom_allocation.c ../../utils/presentation/custom_print.c
+SRCS = main.c ../../utils/data_parsing/file_read.c ../../utils/memory/custom_allocation.c ../../utils/math/custom_math.c
 OBJS = $(SRCS:.c=.o)
 TARGET = main
 

@@ -9,14 +9,16 @@ SRCS = ./2024/day_01/main.c ./2024/day_02/main.c \
 	   ./utils/data_parsing/file_read.c \
 	   ./utils/memory/custom_allocation.c \
 	   ./utils/presentation/custom_print.c \
-	   ./utils/sorting/heap_sort.c
+	   ./utils/sorting/heap_sort.c \
+	   ./utils/math/custom_math.c
 
 # All needed object files
 UTIL_OBJS = \
 	./utils/data_parsing/file_read.o \
 	./utils/memory/custom_allocation.o \
 	./utils/presentation/custom_print.o \
-	./utils/sorting/heap_sort.o
+	./utils/sorting/heap_sort.o \
+	./utils/math/custom_math.o
 
 # All needed binaries
 RUNNABLES = day_01 day_02 day_03 day_04 day_05 \

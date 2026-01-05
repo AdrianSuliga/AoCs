@@ -8,18 +8,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-struct position_t {
-    int i;
-    int j;
-};
-
 static int part_one(char *input);
 static int part_two(char *input);
 static struct position_t locate_guard(char **map, int lines, int columns);
 static void patrol_map(char **map, int lines, int columns, struct position_t position);
 static char rotate(char old_direction);
 static struct position_t get_next_position(struct position_t old_position, char direction);
-static int is_out_of_map(int lines, int columns, struct position_t position);
 static int creates_loop(char **map, int lines, int columns, struct position_t position, int x, int y);
 static int position_eq(struct position_t first, struct position_t second, char first_direction, char second_direction);
 
@@ -276,12 +270,6 @@ static struct position_t get_next_position(struct position_t old_position, char 
     };
 
     return new_position;
-}
-
-static int is_out_of_map(int lines, int columns, struct position_t position)
-{
-    return !(-1 < position.i && position.i < lines &&
-             -1 < position.j && position.j < columns);
 }
 
 static int position_eq(struct position_t first, struct position_t second, char first_direction, char second_direction)
